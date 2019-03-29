@@ -1,23 +1,27 @@
 #include <bits/stdc++.h>
 using namespace std;
-int n,h,jumps[2];
+
+pair<int, int> jumping_mario();
 
 int main() {
 	int T;
 	cin>>T;
 	for(int x = 0; x<T; x++){
-		cin>>n>>h;
-		jumps[0] = 0;
-		jumps[1] = 0;
-		for(int i = 1; i<n; i++){
-			int t;
-			cin>>t;
-			if(t > h) jumps[1]++;
-			if(h > t) jumps[0]++;
-			h = t;
-		}
-		cout<<"Case "<<x+1<<": "<<jumps[1]<<" "<<jumps[0]<<endl;
+		pair<int, int> low_high = jumping_mario();
+		cout<<"Case "<<x+1<<": "<<low_high.first<<" "<<low_high.second<<endl;
 	}
 	return 0;
 }
 
+pair<int, int> jumping_mario(){
+	int n, old_height, new_height;
+	pair<int, int> jumps = make_pair(0,0);
+	cin>>n>>old_height;
+	for(int i = 1; i<n; i++){
+		cin>>new_height;
+		if(old_height > new_height) jumps.first++;
+		else if(new_height > old_height) jumps.second++;
+		old_height = new_height;
+	}
+	return jumps;
+}
